@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Operação Calistenia Militar - Calisthenics Assessment</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background-color: #090909;
+      color: #ffffff;
+      line-height: 1.6;
+    }
+
+    /* ── STICKY HEADER ── */
+    .sticky-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: linear-gradient(180deg, #3a0808 0%, #2a0505 100%);
+      border-bottom: 1px solid #5a1010;
+      text-align: center;
+      padding: 10px 20px 12px;
+    }
+
+    .header-alert {
+      color: #cc2222;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .header-alert span {
+      margin: 0 6px;
+    }
+
+    .header-title {
+      font-size: 26px;
+      font-weight: 900;
+      color: #ffffff;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .header-price-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 6px;
+    }
+
+    .price-old {
+      color: #cc2222;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .price-new-badge {
+      background-color: #7a1a1a;
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 4px 14px;
+      border-radius: 20px;
+    }
+
+    .header-access {
+      font-size: 10px;
+      letter-spacing: 3px;
+      color: #888;
+      text-transform: uppercase;
+      border: 1px solid #444;
+      display: inline-block;
+      padding: 2px 12px;
+      border-radius: 3px;
+    }
+
+    /* ── PAGE WRAPPER ── */
+    .page-content {
+      margin-top: 140px;
+      padding-bottom: 80px;
+    }
+
+    .container {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* ── CARDS ── */
+    .card {
+      background: #141414;
+      border-radius: 12px;
+      padding: 32px 36px;
+      margin-bottom: 8px;
+    }
+
+    .card p {
+      font-size: 17px;
+      color: #dddddd;
+      margin-bottom: 18px;
+      line-height: 1.7;
+    }
+
+    .card blockquote {
+      border-left: 4px solid #4a7a4a;
+      padding-left: 20px;
+      margin: 22px 0;
+    }
+
+    .card blockquote p {
+      font-size: 20px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 0;
+    }
+
+    .card .quote-box {
+      background: #1e1e1e;
+      border-radius: 8px;
+      padding: 18px 22px;
+      margin-top: 18px;
+    }
+
+    .card .quote-box p {
+      font-style: italic;
+      color: #aaaaaa;
+      font-size: 15px;
+      margin-bottom: 0;
+    }
+
+    /* ── CTA BUTTONS ── */
+    .cta-wrap {
+      text-align: center;
+      padding: 28px 0;
+    }
+
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, #4a6a3a 0%, #3d5a30 100%);
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 20px 40px;
+      border-radius: 50px;
+      text-decoration: none;
+      box-shadow: 0 4px 24px rgba(60, 100, 40, 0.35);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(60, 100, 40, 0.5);
+    }
+
+    /* ── SECTION DIVIDER HEADING ── */
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .section-label::before,
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #333;
+    }
+
+    .section-label span {
+      color: #cc2222;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    /* ── SECTION: INFORME DE BAJAS ── */
+    .section-bajas {
+      padding: 50px 0 10px;
+    }
+
+    .section-bajas .card-story {
+      background: #141414;
+      border-radius: 12px;
+      padding: 28px 32px;
+      margin: 24px 0;
+    }
+
+    .section-bajas .card-story p {
+      font-size: 16px;
+      color: #cccccc;
+      line-height: 1.7;
+      margin-bottom: 12px;
+    }
+
+    .section-bajas .card-story p:last-child {
+      margin-bottom: 0;
+    }
+
+    .text-red {
+      color: #cc2222;
+    }
+
+    .text-bold {
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .section-text {
+      font-size: 17px;
+      color: #cccccc;
+      line-height: 1.75;
+      margin-bottom: 16px;
+    }
+
+    .italic-quote {
+      font-style: italic;
+      color: #999;
+    }
+
+    .italic-bold-quote {
+      font-size: 18px;
+      font-weight: 700;
+      color: #ffffff;
+      font-style: italic;
+    }
+
+    /* ── SECTION: POR QUÉ ── */
+    .section-porque {
+      padding: 50px 0 10px;
+    }
+
+    .section-h2 {
+      font-size: 24px;
+      font-weight: 800;
+      color: #ffffff;
+      text-align: center;
+      margin-bottom: 36px;
+    }
+
+    .reason-item {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 36px;
+      align-items: flex-start;
+    }
+
+    .reason-number {
+      font-size: 48px;
+      font-weight: 900;
+      color: #cc2222;
+      line-height: 1;
+      min-width: 60px;
+    }
+
+    .reason-content h3 {
+      font-size: 18px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 8px;
+    }
+
+    .reason-content p {
+      font-size: 16px;
+      color: #bbbbbb;
+      line-height: 1.65;
+    }
+
+    .card-highlight {
+      background: #141414;
+      border-radius: 12px;
+      padding: 28px 32px;
+      text-align: center;
+      margin: 12px 0 28px;
+    }
+
+    .card-highlight p {
+      font-size: 18px;
+      color: #dddddd;
+      line-height: 1.6;
+    }
+
+    .card-highlight .text-bold {
+      font-size: 19px;
+    }
+
+    /* ── SECTION: IMAGINA ── */
+    .section-imagina {
+      padding: 50px 0 10px;
+      text-align: center;
+    }
+
+    .section-imagina .section-h2 {
+      margin-bottom: 20px;
+    }
+
+    .section-imagina p {
+      font-size: 17px;
+      color: #cccccc;
+      line-height: 1.75;
+      margin-bottom: 16px;
+    }
+
+    .section-imagina .bold-text {
+      font-size: 18px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    /* ── SECTION: PRECIO ── */
+    .section-precio {
+      padding: 50px 0 10px;
+      text-align: center;
+    }
+
+    .access-tag {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #888;
+      border: 1px solid #333;
+      display: inline-block;
+      padding: 4px 16px;
+      border-radius: 4px;
+      margin-bottom: 16px;
+    }
+
+    .price-tagline {
+      font-size: 16px;
+      color: #aaaaaa;
+      margin-bottom: 28px;
+    }
+
+    .price-display {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 8px;
+    }
+
+    .price-old-large {
+      font-size: 28px;
+      color: #666;
+      text-decoration: line-through;
+    }
+
+    .price-new-large {
+      font-size: 72px;
+      font-weight: 900;
+      color: #ffffff;
+      line-height: 1;
+    }
+
+    .price-period {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      color: #777;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    .price-warning {
+      font-size: 16px;
+      color: #cc5555;
+      font-style: italic;
+      font-weight: 600;
+      margin-bottom: 32px;
+      line-height: 1.6;
+    }
+
+    .checkout-box {
+      background: #f5f0e8;
+      border-radius: 8px;
+      height: 340px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 32px;
+      max-width: 720px;
+    }
+
+    .checkout-box p {
+      color: #888;
+      font-size: 14px;
+    }
+
+    /* ── SECTION: OPCIONES ── */
+    .section-opciones {
+      padding: 30px 0 10px;
+    }
+
+    .opciones-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 8px;
+    }
+
+    .opcion-card {
+      background: #141414;
+      border-radius: 12px;
+      padding: 28px 24px;
+    }
+
+    .opcion-card h3 {
+      font-size: 16px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 14px;
+      line-height: 1.3;
+    }
+
+    .opcion-card p {
+      font-size: 15px;
+      color: #aaaaaa;
+      line-height: 1.65;
+    }
+
+    /* ── SECTION: GARANTIA ── */
+    .section-garantia {
+      padding: 50px 0;
+      text-align: center;
+    }
+
+    .guarantee-text {
+      font-size: 14px;
+      color: #888;
+      margin-top: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .guarantee-text svg {
+      opacity: 0.6;
+    }
+
+    /* ── SECTION: PD ── */
+    .section-pd {
+      padding: 20px 0 60px;
+      text-align: center;
+    }
+
+    .section-pd .pd-text {
+      font-size: 15px;
+      color: #999;
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .section-pd .pd-text strong {
+      color: #ccc;
+    }
+
+    .section-pd .battle-cry {
+      font-size: 18px;
+      font-weight: 700;
+      font-style: italic;
+      color: #ffffff;
+      margin-bottom: 28px;
+    }
+
+    .cta-text-link {
+      display: inline-block;
+      font-size: 14px;
+      color: #888;
+      text-decoration: underline;
+      letter-spacing: 1px;
+    }
+
+    .cta-text-link:hover {
+      color: #aaa;
+    }
+
+    /* ── ANIMATIONS ── */
+
+    /* Pulse glow on CTA buttons */
+    @keyframes btn-pulse {
+      0%, 100% { box-shadow: 0 4px 24px rgba(60,100,40,0.35); }
+      50%       { box-shadow: 0 4px 40px rgba(80,150,50,0.7), 0 0 0 6px rgba(60,100,40,0.15); }
+    }
+
+    /* Shine sweep across button */
+    @keyframes btn-shine {
+      0%   { left: -100%; }
+      100% { left: 200%; }
+    }
+
+    /* Bounce arrow inside button */
+    @keyframes arrow-bounce {
+      0%, 100% { transform: translateX(0); }
+      50%       { transform: translateX(5px); }
+    }
+
+    /* Alert blink */
+    @keyframes alert-blink {
+      0%, 90%, 100% { opacity: 1; }
+      95%            { opacity: 0.3; }
+    }
+
+    /* Badge pulse */
+    @keyframes badge-pulse {
+      0%, 100% { transform: scale(1); }
+      50%       { transform: scale(1.06); }
+    }
+
+    /* Fade-in from below (scroll reveal) */
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Number count-up shimmer */
+    @keyframes number-in {
+      from { opacity: 0; transform: translateX(-20px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
+    /* Price pop */
+    @keyframes price-pop {
+      0%   { transform: scale(0.7); opacity: 0; }
+      70%  { transform: scale(1.05); opacity: 1; }
+      100% { transform: scale(1); }
+    }
+
+    /* Horizontal line expand */
+    @keyframes line-expand {
+      from { transform: scaleX(0); }
+      to   { transform: scaleX(1); }
+    }
+
+    /* Card border glow on hover */
+    @keyframes card-glow {
+      0%, 100% { border-color: transparent; }
+      50%       { border-color: rgba(74,106,58,0.4); }
+    }
+
+    /* ── CTA BUTTON OVERRIDES ── */
+    .cta-btn {
+      position: relative;
+      overflow: hidden;
+      animation: btn-pulse 2.5s ease-in-out infinite;
+      transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+    }
+
+    /* Shine pseudo-element */
+    .cta-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 60%;
+      height: 100%;
+      background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.18) 50%, transparent 100%);
+      transform: skewX(-20deg);
+      animation: btn-shine 3s ease-in-out infinite 1s;
+    }
+
+    /* Arrow span inside buttons */
+    .cta-btn .arrow {
+      display: inline-block;
+      animation: arrow-bounce 1.2s ease-in-out infinite;
+    }
+
+    .cta-btn:hover {
+      transform: translateY(-3px) scale(1.02);
+      filter: brightness(1.15);
+      box-shadow: 0 10px 40px rgba(80,150,50,0.6);
+    }
+
+    .cta-btn:active {
+      transform: translateY(1px) scale(0.98);
+      filter: brightness(0.95);
+    }
+
+    /* ── HEADER ANIMATIONS ── */
+    .header-alert {
+      animation: alert-blink 4s ease-in-out infinite;
+    }
+
+    .price-new-badge {
+      animation: badge-pulse 2s ease-in-out infinite;
+    }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal-left.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* Stagger delay helpers */
+    .delay-1 { transition-delay: 0.1s; }
+    .delay-2 { transition-delay: 0.22s; }
+    .delay-3 { transition-delay: 0.34s; }
+    .delay-4 { transition-delay: 0.46s; }
+
+    /* ── CARDS HOVER ── */
+    .card,
+    .card-story,
+    .card-highlight,
+    .opcion-card {
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      border: 1px solid transparent;
+    }
+
+    .card:hover,
+    .card-story:hover,
+    .card-highlight:hover,
+    .opcion-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+      border-color: rgba(74,106,58,0.25);
+    }
+
+    /* ── PRICE ANIMATION ── */
+    .price-new-large {
+      display: inline-block;
+    }
+
+    .price-new-large.animated {
+      animation: price-pop 0.7s cubic-bezier(0.34,1.56,0.64,1) forwards;
+    }
+
+    /* ── REASON NUMBERS ── */
+    .reason-number {
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+
+    .reason-item:hover .reason-number {
+      transform: scale(1.15);
+      color: #ff3333;
+    }
+
+    /* ── SECTION LABEL LINE ── */
+    .section-label::before,
+    .section-label::after {
+      transform-origin: center;
+      animation: line-expand 0.8s ease forwards;
+    }
+
+    /* ── GUARANTEE ICON ── */
+    @keyframes shield-pulse {
+      0%, 100% { transform: scale(1); opacity: 0.6; }
+      50%       { transform: scale(1.25); opacity: 1; }
+    }
+
+    .guarantee-text svg {
+      animation: shield-pulse 2s ease-in-out infinite;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .header-title { font-size: 18px; }
+      .price-new-large { font-size: 52px; }
+      .opciones-grid { grid-template-columns: 1fr; }
+      .card { padding: 22px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- STICKY HEADER -->
+  <header class="sticky-header">
+    <div class="header-alert">
+      <span>&#9651;</span> Alerta Nutricional Táctica <span>&#9651;</span>
+    </div>
+    <div class="header-title">Tu entrenamiento SIN esto es sabotaje</div>
+    <div class="header-price-row">
+      <span class="price-old">De US$ 49.90</span>
+      <span class="price-new-badge">Por solo US$ 17.90</span>
+    </div>
+    <div class="header-access">Acceso Táctico Desbloqueado</div>
+  </header>
+
+  <!-- PAGE CONTENT -->
+  <main class="page-content">
+
+    <!-- SECTION 1: INTRO -->
+    <section style="padding: 30px 0 0;">
+      <div class="container">
+        <div class="card">
+          <p>Tu perfil fue aprobado para el Desafío. Pero antes de que empieces a entrenar, necesito que leas esto con atención.</p>
+          <blockquote>
+            <p>Lo que te voy a mostrar ahora puede ser la diferencia entre transformarte en 21 días... o destruir tu cuerpo sin saberlo.</p>
+          </blockquote>
+          <p>He visto a cientos de reclutas entrar al desafío con "sangre en los ojos", entrenar como bestias, pero rendirse en la segunda semana porque su cuerpo colapsó.</p>
+          <div class="quote-box">
+            <p>"Comandante, entreno, sudo, pero la panza no baja y me siento débil, sin energía... ¿Qué está pasando?"</p>
+          </div>
+        </div>
+
+        <div class="cta-wrap">
+          <a href="#precio" class="cta-btn">SÍ, QUIERO MI ARSENAL NUTRICIONAL &nbsp;<span class="arrow">&#8594;</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: INFORME DE BAJAS -->
+    <section class="section-bajas">
+      <div class="container">
+        <div class="section-label reveal"><span>Informe de Bajas</span></div>
+
+        <p class="section-text reveal delay-1">
+          Lo peor no es rendirse. Lo peor es dedicarse, sentir el dolor muscular, levantarse temprano...
+          <strong class="text-bold">y mirar al espejo dentro de 30 días y ver el mismo cuerpo.</strong>
+        </p>
+
+        <p class="section-text reveal delay-2">
+          Eso le pasa a quien ignora la nutrición táctica. Es lo que llamamos <span class="text-red">"Soldado de Fogueo"</span>. Hace mucho ruido, pero no causa impacto.
+        </p>
+
+        <div class="card-story reveal delay-3">
+          <p>
+            Un alumno reciente, Marcos, intentó hacerlo a su manera. Comió el tradicional "pollo con arroz" de los civiles. ¿Resultado?
+            <span class="text-red">Su cuerpo entró en catabolismo.</span> Perdió músculo en lugar de grasa. Terminó con ese aspecto de "enfermo" en lugar de estar definido.
+          </p>
+          <p class="italic-quote">Él me dijo después:</p>
+          <p class="italic-bold-quote">"Si hubiera sabido que la alimentación era el 80% de la guerra, no habría ahorrado monedas al principio."</p>
+        </div>
+
+        <div class="cta-wrap reveal delay-4">
+          <a href="#precio" class="cta-btn">NO QUIERO SER UN SOLDADO DE FOGUEO &nbsp;<span class="arrow">&#8594;</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: POR QUÉ -->
+    <section class="section-porque">
+      <div class="container">
+        <h2 class="section-h2 reveal">¿Por qué la nutrición es el 80% de la guerra?</h2>
+
+        <div class="reason-item reveal-left delay-1">
+          <div class="reason-number">01</div>
+          <div class="reason-content">
+            <h3>Evitar el Sabotaje</h3>
+            <p>
+              <strong>8 de cada 10 hombres</strong> que entrenan calistenia sin ajuste nutricional sufren lesiones o estancan sus resultados en el primer mes. Tu cuerpo necesita munición para reconstruirse.
+            </p>
+          </div>
+        </div>
+
+        <div class="reason-item reveal-left delay-2">
+          <div class="reason-number">02</div>
+          <div class="reason-content">
+            <h3>Munición Real</h3>
+            <p>
+              Sin el Arsenal Nutricional Militar, tu cuerpo no tiene "munición" para reconstruir la fibra muscular. Estarás literalmente destruyéndote en el entrenamiento sin beneficio.
+            </p>
+          </div>
+        </div>
+
+        <div class="card-highlight reveal delay-3">
+          <p>
+            Con este protocolo, obligas a tu organismo a producir
+            <strong class="text-bold">Testosterona y GH (Hormona del Crecimiento)</strong> mientras duermes.
+          </p>
+        </div>
+
+        <div class="cta-wrap reveal delay-4">
+          <a href="#precio" class="cta-btn">QUIERO PRODUCIR TESTOSTERONA NATURAL &nbsp;<span class="arrow">&#8594;</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: IMAGINA -->
+    <section class="section-imagina">
+      <div class="container">
+        <h2 class="section-h2 reveal">Imagina tu vida en 21 días...</h2>
+
+        <p class="reveal delay-1">
+          Terminas el entrenamiento y no te sientes agotado, te sientes energizado. Comes comidas baratas, que ya tienes en tu refrigerador, pero en la combinación táctica correcta.
+        </p>
+
+        <p class="bold-text reveal delay-2">
+          Cuando te quitas la camiseta, ves las venas del antebrazo saltando. Ves la "V" del abdomen marcándose. Tus amigos te preguntan qué estás tomando. Y tú sonríes, sabiendo que es solo comida estratégica.
+        </p>
+
+        <div class="cta-wrap reveal delay-3">
+          <a href="#precio" class="cta-btn">QUIERO ESTA VISIÓN PARA MÍ &nbsp;<span class="arrow">&#8594;</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: PRECIO -->
+    <section class="section-precio" id="precio">
+      <div class="container">
+        <div class="access-tag reveal">Acceso Limitado</div>
+        <p class="price-tagline reveal delay-1">El precio de una comida rápida puede cambiar tu físico para siempre.</p>
+
+        <div class="price-display reveal delay-2">
+          <span class="price-old-large">$49.90</span>
+          <span class="price-new-large" id="priceTag">US$ 17.90</span>
+        </div>
+        <p class="price-period reveal delay-2">Pago único</p>
+
+        <p class="price-warning reveal delay-3">
+          Si no tienes 17.90 dólares para invertir en la única cosa que garantizará que tu sudor valga la pena, tal vez no estés listo para la guerra.
+        </p>
+
+        <div class="checkout-box reveal delay-4">
+          <a href="https://pay.kiwify.com/t77HglB" target="_blank" class="cta-btn" style="display:inline-block;text-decoration:none;margin:0 auto;">QUIERO MI ARSENAL POR US$ 17.90 &nbsp;&#8594;</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: OPCIONES -->
+    <section class="section-opciones">
+      <div class="container">
+        <div class="opciones-grid">
+          <div class="opcion-card reveal delay-1">
+            <h3>Opción 1: EL CAMINO DEL CIVIL</h3>
+            <p>Entrenar pesado y correr el riesgo de entrar en overtraining, perder masa magra y seguir con la barriga blanda por meses, frustrado y cansado.</p>
+          </div>
+          <div class="opcion-card reveal delay-2">
+            <h3>Opción 2: EL CAMINO DE LA ÉLITE</h3>
+            <p>Recibir el mapa exacto de qué comer para explotar tus resultados. Garantizar que cada flexión se transforme en músculo sólido. Comer barato, comer bien, crecer rápido.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 7: GARANTIA CTA -->
+    <section class="section-garantia">
+      <div class="container">
+        <div class="cta-wrap reveal" style="padding-top: 10px;">
+          <a href="#precio" class="cta-btn">QUIERO MI ARSENAL POR US$ 17.90 &nbsp;<span class="arrow">&#8594;</span></a>
+        </div>
+        <div class="guarantee-text reveal delay-1">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+          Riesgo Cero. Si no te gusta, te devuelvo tu dinero.
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 8: PD -->
+    <section class="section-pd">
+      <div class="container">
+        <p class="pd-text reveal">
+          <strong>P.D.:</strong> Si cierras esta pestaña, esta oferta desaparece. Tendrás que pagar el precio completo o, peor, pagar el precio de la ignorancia con resultados mediocres. No dejes tu tanque vacío en medio del tiroteo.
+        </p>
+        <p class="battle-cry reveal delay-1">La nutrición es el 80% de la guerra. Sin munición, no hay victoria.</p>
+        <a href="#precio" class="cta-text-link reveal delay-2">SÍ, QUIERO MI ARSENAL NUTRICIONAL AHORA</a>
+        <div style="text-align:center;margin-top:24px;">
+          <a href="downsell.html" style="color:#666;font-size:13px;text-decoration:underline;cursor:pointer;">Não obrigado, seguir sem o Arsenal Nutricional</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    // ── Scroll Reveal (IntersectionObserver) ──
+    const revealEls = document.querySelectorAll('.reveal, .reveal-left');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+
+          // Trigger price pop when price section enters view
+          if (entry.target.id === 'priceTag') {
+            entry.target.classList.add('animated');
+          }
+
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    revealEls.forEach(el => observer.observe(el));
+
+    // Also observe price tag separately
+    const priceTag = document.getElementById('priceTag');
+    if (priceTag) observer.observe(priceTag);
+
+    // ── Ripple effect on button click ──
+    document.querySelectorAll('.cta-btn').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        const ripple = document.createElement('span');
+        const rect = btn.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        ripple.style.cssText = `
+          position:absolute;
+          border-radius:50%;
+          background:rgba(255,255,255,0.25);
+          width:${size}px;height:${size}px;
+          left:${e.clientX - rect.left - size/2}px;
+          top:${e.clientY - rect.top - size/2}px;
+          transform:scale(0);
+          animation:ripple-anim 0.55s ease-out forwards;
+          pointer-events:none;
+        `;
+        btn.appendChild(ripple);
+        setTimeout(() => ripple.remove(), 600);
+      });
+    });
+  </script>
+
+  <style>
+    @keyframes ripple-anim {
+      to { transform: scale(2.5); opacity: 0; }
+    }
+  </style>
+
+</body>
+</html>

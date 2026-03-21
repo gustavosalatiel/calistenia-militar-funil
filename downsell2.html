@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Operação Calistenia Militar - Espera. Antes de que te vayas...</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background-color: #090909;
+      color: #ffffff;
+      line-height: 1.6;
+    }
+
+    /* ── STICKY HEADER ── */
+    .sticky-header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      background: linear-gradient(180deg, #3a0808 0%, #2a0505 100%);
+      border-bottom: 1px solid #5a1010;
+      text-align: center;
+      padding: 10px 20px 12px;
+    }
+    .header-alert {
+      color: #cc2222;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+      animation: alert-blink 4s ease-in-out infinite;
+    }
+    .header-title {
+      font-size: 26px;
+      font-weight: 900;
+      color: #ffffff;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .header-price-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 6px;
+    }
+    .price-old { color: #cc2222; font-size: 14px; font-weight: 600; }
+    .price-new-badge {
+      background-color: #7a1a1a;
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 4px 14px;
+      border-radius: 20px;
+      animation: badge-pulse 2s ease-in-out infinite;
+    }
+    .header-access {
+      font-size: 10px;
+      letter-spacing: 3px;
+      color: #888;
+      text-transform: uppercase;
+      border: 1px solid #444;
+      display: inline-block;
+      padding: 2px 12px;
+      border-radius: 3px;
+    }
+
+    /* ── PAGE WRAPPER ── */
+    .page-content { margin-top: 140px; padding-bottom: 80px; }
+    .container { max-width: 760px; margin: 0 auto; padding: 0 20px; }
+
+    /* ── CARD BASE ── */
+    .card {
+      background: #141414;
+      border-radius: 12px;
+      padding: 32px 36px;
+      margin-bottom: 8px;
+      border: 1px solid transparent;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+    .card:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(0,0,0,0.5); border-color: rgba(74,106,58,0.25); }
+    .card p { font-size: 17px; color: #dddddd; margin-bottom: 18px; line-height: 1.7; }
+    .card p:last-child { margin-bottom: 0; }
+    .card blockquote {
+      border-left: 4px solid #4a7a4a;
+      padding-left: 20px;
+      margin: 22px 0;
+    }
+    .card blockquote p { font-size: 20px; font-weight: 700; color: #ffffff; margin-bottom: 0; }
+
+    /* ── CTA BUTTONS ── */
+    .cta-wrap { text-align: center; padding: 28px 0; }
+    .cta-btn {
+      position: relative;
+      overflow: hidden;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, #4a6a3a 0%, #3d5a30 100%);
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 20px 40px;
+      border-radius: 50px;
+      text-decoration: none;
+      animation: btn-pulse 2.5s ease-in-out infinite;
+      transition: transform 0.12s ease, filter 0.12s ease;
+    }
+    .cta-btn::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 60%; height: 100%;
+      background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.18) 50%, transparent 100%);
+      transform: skewX(-20deg);
+      animation: btn-shine 3s ease-in-out infinite 1s;
+    }
+    .cta-btn .arrow { display: inline-block; animation: arrow-bounce 1.2s ease-in-out infinite; }
+    .cta-btn:hover { transform: translateY(-3px) scale(1.02); filter: brightness(1.15); box-shadow: 0 10px 40px rgba(80,150,50,0.6); }
+    .cta-btn:active { transform: translateY(1px) scale(0.98); filter: brightness(0.95); }
+
+    /* ── SECTION LABEL ── */
+    .section-label {
+      display: flex; align-items: center; gap: 16px; margin-bottom: 28px;
+    }
+    .section-label::before, .section-label::after { content: ''; flex: 1; height: 1px; background: #333; }
+    .section-label span {
+      color: #cc2222; font-size: 11px; font-weight: 700;
+      letter-spacing: 3px; text-transform: uppercase; white-space: nowrap;
+    }
+
+    /* ── TEXT HELPERS ── */
+    .text-red { color: #cc2222; }
+    .text-bold { font-weight: 700; color: #ffffff; }
+    .section-text { font-size: 17px; color: #cccccc; line-height: 1.75; margin-bottom: 16px; }
+    .italic-quote { font-style: italic; color: #999; }
+
+    /* ── STORY CARD ── */
+    .story-card {
+      background: #141414;
+      border-radius: 12px;
+      padding: 28px 32px;
+      margin: 24px 0;
+      border: 1px solid transparent;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+    .story-card:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(0,0,0,0.5); border-color: rgba(74,106,58,0.25); }
+    .story-card p { font-size: 16px; color: #cccccc; line-height: 1.7; margin-bottom: 12px; }
+    .story-card p:last-child { margin-bottom: 0; }
+
+    .quote-red {
+      background: #1a0a0a;
+      border-left: 3px solid #cc2222;
+      border-radius: 6px;
+      padding: 14px 18px;
+      margin: 14px 0;
+    }
+    .quote-red p { font-size: 16px; color: #cc4444; font-style: italic; margin-bottom: 0; }
+
+    .bullet-list { list-style: none; margin: 14px 0; }
+    .bullet-list li {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 16px; color: #cccccc; margin-bottom: 8px; line-height: 1.5;
+    }
+    .bullet-list li::before { content: '✕'; color: #cc2222; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+    /* ── STATS ── */
+    .section-stats { padding: 50px 0 10px; }
+    .section-h2 { font-size: 24px; font-weight: 800; color: #ffffff; text-align: center; margin-bottom: 36px; }
+
+    .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+    .stat-card {
+      background: #141414; border-radius: 12px; padding: 28px 24px; text-align: center;
+      border: 1px solid transparent;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .stat-card:hover { transform: translateY(-3px); border-color: rgba(204,34,34,0.3); }
+    .stat-number {
+      font-size: 56px; font-weight: 900; color: #cc2222;
+      line-height: 1; margin-bottom: 12px; display: block;
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+    .stat-card:hover .stat-number { transform: scale(1.1); color: #ff3333; }
+    .stat-desc { font-size: 15px; color: #aaaaaa; line-height: 1.6; }
+    .stat-desc strong { color: #ffffff; }
+
+    .truth-card {
+      background: #141414; border-radius: 12px; padding: 24px 28px;
+      margin-bottom: 16px; border-left: 4px solid #cc2222;
+    }
+    .truth-card .label {
+      font-size: 12px; font-weight: 700; letter-spacing: 2px;
+      color: #cc2222; text-transform: uppercase; margin-bottom: 10px; display: block;
+    }
+    .truth-card p { font-size: 16px; color: #cccccc; line-height: 1.7; }
+
+    .warning-card {
+      background: #141414; border-radius: 12px; padding: 24px 28px;
+      text-align: center; margin: 24px 0;
+    }
+    .warning-card p { font-size: 17px; color: #dddddd; line-height: 1.7; }
+
+    /* ── PROTOCOLO ── */
+    .protocolo-card {
+      background: #141414; border-radius: 16px; padding: 36px 32px;
+      border: 1px solid transparent;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .protocolo-card:hover { transform: translateY(-3px); border-color: rgba(74,106,58,0.3); }
+    .protocolo-icons { text-align: center; font-size: 28px; margin-bottom: 16px; letter-spacing: 8px; }
+    .protocolo-card h2 { text-align: center; font-size: 26px; font-weight: 800; color: #ffffff; margin-bottom: 12px; }
+    .protocolo-card .subtitle { text-align: center; font-size: 16px; color: #aaaaaa; margin-bottom: 32px; line-height: 1.6; }
+    .protocolo-card .subtitle strong { color: #ffffff; }
+
+    .days-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+    .day-card {
+      background: #1e1e1e; border-radius: 10px; padding: 20px 16px;
+      border: 1px solid transparent;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .day-card:hover { transform: translateY(-3px); border-color: rgba(74,106,58,0.3); }
+    .day-label { font-size: 12px; font-weight: 700; letter-spacing: 2px; color: #4a8a4a; text-transform: uppercase; margin-bottom: 10px; display: block; }
+    .day-card p { font-size: 14px; color: #aaaaaa; line-height: 1.6; }
+
+    .base-card { background: #1a1a1a; border-radius: 10px; padding: 20px 24px; text-align: center; margin-top: 20px; }
+    .base-card p { font-size: 16px; color: #dddddd; line-height: 1.6; }
+
+    /* ── PRECIO ── */
+    .section-precio { padding: 50px 0 10px; text-align: center; }
+    .ultima-tag {
+      display: inline-block; font-size: 16px; font-weight: 800;
+      letter-spacing: 2px; color: #ffffff; margin-bottom: 16px;
+      animation: urgency-flash 1.5s ease-in-out infinite;
+    }
+    .price-tagline { font-size: 17px; color: #aaaaaa; margin-bottom: 24px; }
+    .price-display { display: flex; align-items: center; justify-content: center; gap: 16px; margin-bottom: 6px; }
+    .price-old-large { font-size: 28px; color: #666; text-decoration: line-through; }
+    .price-new-large {
+      font-size: 72px; font-weight: 900; color: #ffffff; line-height: 1; display: inline-block;
+    }
+    .price-new-large.animated { animation: price-pop 0.7s cubic-bezier(0.34,1.56,0.64,1) forwards; }
+    .price-period { font-size: 11px; font-weight: 700; letter-spacing: 3px; color: #666; text-transform: uppercase; margin-bottom: 28px; }
+
+    .escucha-card {
+      background: #141414; border-radius: 12px; padding: 24px 28px;
+      margin: 0 auto 32px; max-width: 600px;
+    }
+    .escucha-card .label { font-size: 14px; font-weight: 700; color: #ffffff; margin-bottom: 10px; }
+    .escucha-card p { font-size: 16px; color: #cccccc; line-height: 1.7; }
+
+    .checkout-box {
+      background: #f5f0e8; border-radius: 8px; height: 340px;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 32px; max-width: 720px;
+    }
+    .checkout-box p { color: #888; font-size: 14px; }
+
+    /* ── OPCIONES ── */
+    .section-opciones { padding: 30px 0 10px; }
+    .opciones-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .opcion-card {
+      background: #141414; border-radius: 12px; padding: 28px 24px;
+      border: 1px solid transparent;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .opcion-card:hover { transform: translateY(-3px); border-color: rgba(74,106,58,0.25); }
+    .opcion-card h3 { font-size: 16px; font-weight: 800; color: #ffffff; margin-bottom: 14px; }
+    .opcion-card p { font-size: 15px; color: #aaaaaa; line-height: 1.65; }
+
+    /* ── GARANTIA ── */
+    .section-garantia { padding: 50px 0; text-align: center; }
+    .guarantee-text {
+      font-size: 14px; color: #888; margin-top: 14px;
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+    }
+    .guarantee-text svg { animation: shield-pulse 2s ease-in-out infinite; }
+
+    /* ── PD ── */
+    .section-pd { padding: 20px 0 60px; text-align: center; }
+    .section-pd .pd-text { font-size: 15px; color: #999; line-height: 1.7; margin-bottom: 16px; }
+    .section-pd .pd-text strong { color: #ccc; }
+    .section-pd .no-sleep { font-size: 15px; color: #999; margin-bottom: 20px; }
+    .cta-text-link { display: inline-block; font-size: 14px; color: #888; text-decoration: underline; letter-spacing: 1px; }
+    .cta-text-link:hover { color: #aaa; }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-left { opacity: 0; transform: translateX(-30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal-left.visible { opacity: 1; transform: translateX(0); }
+    .delay-1 { transition-delay: 0.10s; }
+    .delay-2 { transition-delay: 0.22s; }
+    .delay-3 { transition-delay: 0.34s; }
+    .delay-4 { transition-delay: 0.46s; }
+
+    /* ── KEYFRAMES ── */
+    @keyframes alert-blink { 0%,90%,100%{opacity:1}95%{opacity:0.3} }
+    @keyframes badge-pulse { 0%,100%{transform:scale(1)}50%{transform:scale(1.06)} }
+    @keyframes btn-pulse {
+      0%,100%{box-shadow:0 4px 24px rgba(60,100,40,0.35)}
+      50%{box-shadow:0 4px 40px rgba(80,150,50,0.7),0 0 0 6px rgba(60,100,40,0.15)}
+    }
+    @keyframes btn-shine { 0%{left:-100%}100%{left:200%} }
+    @keyframes arrow-bounce { 0%,100%{transform:translateX(0)}50%{transform:translateX(5px)} }
+    @keyframes price-pop { 0%{transform:scale(0.7);opacity:0}70%{transform:scale(1.05);opacity:1}100%{transform:scale(1)} }
+    @keyframes shield-pulse { 0%,100%{transform:scale(1);opacity:0.6}50%{transform:scale(1.25);opacity:1} }
+    @keyframes urgency-flash { 0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.75;transform:scale(1.04)} }
+    @keyframes ripple-anim { to{transform:scale(2.5);opacity:0} }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .header-title { font-size: 18px; }
+      .price-new-large { font-size: 52px; }
+      .stats-grid, .opciones-grid { grid-template-columns: 1fr; }
+      .days-grid { grid-template-columns: 1fr; }
+      .card { padding: 22px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- STICKY HEADER -->
+  <header class="sticky-header">
+    <div class="header-alert"><span>&#9651;</span> Alerta de Baja Inminente <span>&#9651;</span></div>
+    <div class="header-title">⚠️ Espera. Antes de que te vayas...</div>
+    <div class="header-price-row">
+      <span class="price-old">De US$ 17.90</span>
+      <span class="price-new-badge">Por solo US$ 4.90</span>
+    </div>
+    <div class="header-access">Protocolo de Emergencia Activado</div>
+  </header>
+
+  <main class="page-content">
+
+    <!-- SECTION 1: INTRO -->
+    <section style="padding: 30px 0 0;">
+      <div class="container">
+        <div class="card reveal">
+          <p>
+            Sé que hiciste clic en <span class="text-red">"no"</span>. Probablemente pensaste:
+            <em>"Ya duermo lo suficiente"</em> o <em>"Puedo arreglármelas sin eso"</em>.
+          </p>
+          <blockquote>
+            <p>Pero déjame mostrarte algo que vi la semana pasada. Y que me obligó a bajar el precio de este protocolo a menos de 5 dólares.</p>
+          </blockquote>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: INFORME DE BAJA -->
+    <section style="padding: 40px 0 10px;">
+      <div class="container">
+        <div class="section-label reveal"><span>Informe de Baja #2847</span></div>
+
+        <div class="story-card reveal delay-1">
+          <p>Ricardo, 34 años. Entró al Desafío con toda la motivación del mundo. Entrenaba 6 días a la semana. Seguía cada ejercicio al pie de la letra.</p>
+          <p><strong class="text-bold">Pero dormía 5 horas por noche.</strong> Decía que "no tenía tiempo" para más. Que podía compensar con café y fuerza de voluntad.</p>
+
+          <div class="quote-red">
+            <p>"Comandante, estoy destruido. No puedo ni hacer 10 flexiones seguidas. ¿Qué está pasando?"</p>
+          </div>
+
+          <p>Le pedí que me enviara una foto. Lo que vi me hizo enojar:</p>
+          <ul class="bullet-list">
+            <li>Ojeras profundas, piel pálida</li>
+            <li>Perdió 3 kg de músculo (no grasa)</li>
+            <li>La barriga seguía igual o peor</li>
+          </ul>
+
+          <p>Estaba en <span class="text-red">catabolismo puro</span>. Su cuerpo se estaba comiendo a sí mismo.</p>
+
+          <p style="margin-top:18px;font-weight:700;color:#dddddd;">¿Sabes qué pasó cuando finalmente aplicó el Protocolo de Reinicio 72h?</p>
+          <p style="margin-top:10px;font-size:16px;color:#cccccc;line-height:1.7;">
+            En 3 días recuperó la energía. En 2 semanas, volvió a ganar músculo. Hoy está en la mejor forma de su vida.
+            <strong class="text-bold">Pero perdió 14 días de evolución por ignorar esto al principio.</strong>
+          </p>
+        </div>
+
+        <div class="cta-wrap reveal delay-2">
+          <a href="#precio" class="cta-btn">NO QUIERO PERDER NI UN DÍA &nbsp;<span class="arrow">&#8594;</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: STATS -->
+    <section class="section-stats">
+      <div class="container">
+        <h2 class="section-h2 reveal">¿Por qué insisto tanto en esto?</h2>
+        <p class="section-text reveal delay-1" style="text-align:center;margin-bottom:28px;">Porque he visto este patrón repetirse decenas de veces:</p>
+
+        <div class="stats-grid">
+          <div class="stat-card reveal delay-1">
+            <span class="stat-number">73%</span>
+            <p class="stat-desc">De los hombres que abandonan el Desafío en las primeras 3 semanas <strong>dormían menos de 6 horas</strong> por noche.</p>
+          </div>
+          <div class="stat-card reveal delay-2">
+            <span class="stat-number">48h</span>
+            <p class="stat-desc">Es el tiempo de <strong>recuperación muscular que pierdes</strong> por cada noche de sueño malo. No se recupera al día siguiente.</p>
+          </div>
+        </div>
+
+        <div class="truth-card reveal delay-3">
+          <span class="label">La verdad dura:</span>
+          <p>Si duermes mal hoy, el entrenamiento de mañana será <span class="text-red"><strong>contraproducente</strong></span>. No construirás músculo. Lo quemarás. Tu cortisol estará alto, tu testosterona baja, y tu cuerpo en modo supervivencia.</p>
+        </div>
+
+        <div class="warning-card reveal delay-4">
+          <p>No quiero que en 2 semanas me escribas diciendo "el entrenamiento no funciona" cuando el problema fue que nunca activaste el modo de recuperación.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: EL PROTOCOLO -->
+    <section style="padding: 50px 0 10px;">
+      <div class="container">
+        <div class="protocolo-card reveal">
+          <div class="protocolo-icons">🌙 🔋</div>
+          <h2>El Protocolo de Reinicio 72h</h2>
+          <p class="subtitle">
+            No es un suplemento. No es meditación hippie. Es un <strong>protocolo táctico de desconexión</strong> que activa tu sistema nervioso parasimpático en menos de 3 minutos.
+          </p>
+          <div class="days-grid">
+            <div class="day-card reveal delay-1">
+              <span class="day-label">Día 1</span>
+              <p>Activas el "switch" del Nervio Vago. Tu cuerpo entra en modo recuperación por primera vez en meses.</p>
+            </div>
+            <div class="day-card reveal delay-2">
+              <span class="day-label">Día 2</span>
+              <p>Despiertas con energía real. No cafeína falsa. Energía hormonal. Tu primera erección matutina en semanas.</p>
+            </div>
+            <div class="day-card reveal delay-3">
+              <span class="day-label">Día 3</span>
+              <p>Tu entrenamiento se siente diferente. Más fuerza, más resistencia. El músculo empieza a crecer.</p>
+            </div>
+          </div>
+          <div class="base-card" style="margin-top:20px;">
+            <p>Esto no es opcional si quieres resultados reales. Es la <strong>base del sistema.</strong></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: PRECIO -->
+    <section class="section-precio" id="precio">
+      <div class="container">
+        <div class="ultima-tag reveal">🚨 ÚLTIMA OPORTUNIDAD 🚨</div>
+        <p class="price-tagline reveal delay-1">Bajé el precio al costo de un café en Starbucks.</p>
+
+        <div class="price-display reveal delay-2">
+          <span class="price-old-large">$17.90</span>
+          <span class="price-new-large" id="priceTag">US$ 4.90</span>
+        </div>
+        <p class="price-period reveal delay-2">Pago único • Acceso inmediato</p>
+
+        <div class="escucha-card reveal delay-3">
+          <p class="label">Escucha esto:</p>
+          <p>Si no tienes 4.90 dólares para proteger tu inversión en este entrenamiento, entonces probablemente no estás listo para el Desafío. <span class="text-red">Y está bien admitirlo.</span></p>
+        </div>
+
+        <div class="checkout-box reveal delay-4">
+          <a href="https://pay.kiwify.com/CvCHRFt" target="_blank" class="cta-btn" style="display:inline-block;text-decoration:none;margin:0 auto;">SÍ, AGREGAR EL RESET 72H POR US$ 5.00 &nbsp;&#8594;</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: OPCIONES -->
+    <section class="section-opciones">
+      <div class="container">
+        <div class="opciones-grid">
+          <div class="opcion-card reveal delay-1">
+            <h3>Opción 1: Ignorar la Advertencia</h3>
+            <p>Cerrar esta página. Ahorrar 4.90. Entrenar duro pero dormir mal. Perder músculo en lugar de ganarlo. Culpar al programa en 2 semanas cuando no veas resultados.</p>
+          </div>
+          <div class="opcion-card reveal delay-2">
+            <h3>Opción 2: Activar el Protocolo</h3>
+            <p>Invertir 4.90. Activar el modo recuperación. Despertar con energía y erección matutina. Ver cómo cada entrenamiento se convierte en músculo real.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 7: CTA FINAL -->
+    <section class="section-garantia">
+      <div class="container">
+        <div class="cta-wrap reveal" style="padding-top:10px;">
+          <a href="#precio" class="cta-btn">SÍ, AGREGAR EL RESET 72H POR US$ 4.90 &nbsp;<span class="arrow">&#8594;</span></a>
+        </div>
+        <div class="guarantee-text reveal delay-1">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+          Garantía de 7 días. Si no funciona, te devuelvo cada centavo.
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 8: PD -->
+    <section class="section-pd">
+      <div class="container">
+        <p class="pd-text reveal">
+          <strong>P.D.:</strong> Si cierras esta página, esta oferta desaparece. Nunca más verás el Protocolo de Reinicio 72h por 4.90. Y cuando en 2 semanas estés frustrado sin resultados, recordarás este momento.
+        </p>
+        <p class="no-sleep reveal delay-1">No dejes que el sueño malo destruya tu esfuerzo.</p>
+        <a href="#precio" class="cta-text-link reveal delay-2">SÍ, AGREGAR A MI PEDIDO AHORA</a>
+        <div style="text-align:center;margin-top:24px;">
+          <a href="upsell3.html" style="color:#666;font-size:13px;text-decoration:underline;cursor:pointer;">Não obrigado, seguir sem o desconto</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    // ── Scroll Reveal ──
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          if (entry.target.id === 'priceTag') entry.target.classList.add('animated');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal, .reveal-left').forEach(el => observer.observe(el));
+    const pt = document.getElementById('priceTag');
+    if (pt) observer.observe(pt);
+
+    // ── Ripple ──
+    document.querySelectorAll('.cta-btn').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        const r = document.createElement('span');
+        const rect = btn.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        r.style.cssText = `position:absolute;border-radius:50%;background:rgba(255,255,255,0.25);
+          width:${size}px;height:${size}px;
+          left:${e.clientX-rect.left-size/2}px;top:${e.clientY-rect.top-size/2}px;
+          transform:scale(0);animation:ripple-anim 0.55s ease-out forwards;pointer-events:none;`;
+        btn.appendChild(r);
+        setTimeout(() => r.remove(), 600);
+      });
+    });
+  </script>
+
+</body>
+</html>
