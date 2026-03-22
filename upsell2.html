@@ -669,7 +669,9 @@
     document.querySelectorAll('.reveal, .reveal-left').forEach(el => observer.observe(el));
     const pt = document.getElementById('priceTag');
     if (pt) observer.observe(pt);
-    setTimeout(() => { document.querySelectorAll('.reveal, .reveal-left').forEach(el => { if (!el.classList.contains('visible')) el.classList.add('visible'); }); }, 500);
+    function forceReveal() { document.querySelectorAll('.reveal, .reveal-left').forEach(el => { if (!el.classList.contains('visible')) el.classList.add('visible'); }); }
+    setTimeout(forceReveal, 100);
+    window.addEventListener('load', forceReveal);
 
     // ── Ripple ──
     document.querySelectorAll('.cta-btn').forEach(btn => {
