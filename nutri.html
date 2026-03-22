@@ -915,9 +915,10 @@
           observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.15 });
+    }, { threshold: 0, rootMargin: '0px 0px -5% 0px' });
 
     revealEls.forEach(el => observer.observe(el));
+    setTimeout(() => { revealEls.forEach(el => { if (!el.classList.contains('visible')) el.classList.add('visible'); }); }, 500);
 
     // Also observe price tag separately
     const priceTag = document.getElementById('priceTag');

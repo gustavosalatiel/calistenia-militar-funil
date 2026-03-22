@@ -468,10 +468,11 @@
           observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.12 });
+    }, { threshold: 0, rootMargin: '0px 0px -5% 0px' });
     document.querySelectorAll('.reveal, .reveal-left').forEach(el => observer.observe(el));
     const pt = document.getElementById('priceTag');
     if (pt) observer.observe(pt);
+    setTimeout(() => { document.querySelectorAll('.reveal, .reveal-left').forEach(el => { if (!el.classList.contains('visible')) el.classList.add('visible'); }); }, 500);
 
     // ── Ripple ──
     document.querySelectorAll('.cta-btn').forEach(btn => {

@@ -725,9 +725,10 @@
           observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.15 });
+    }, { threshold: 0, rootMargin: '0px 0px -5% 0px' });
 
     revealEls.forEach(el => observer.observe(el));
+    setTimeout(() => { revealEls.forEach(el => { if (!el.classList.contains('visible')) el.classList.add('visible'); }); }, 500);
 
     const priceTag = document.getElementById('priceTag');
     if (priceTag) observer.observe(priceTag);
