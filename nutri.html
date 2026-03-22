@@ -839,7 +839,7 @@
 
         <div class="reveal delay-4" style="margin:0 auto 32px;max-width:720px;">
           <div style="text-align:center" id="kiwify-upsell-t77HglB" data-upsell-url="https://militarcalistenia.shop/upsell2.html" data-downsell-url="https://militarcalistenia.shop/downsell.html">
-            <button id="kiwify-upsell-trigger-t77HglB" style="background:linear-gradient(135deg,#4a6a3a 0%,#3d5a30 100%);padding:14px 24px;cursor:pointer;color:#FFFFFF;font-weight:700;border-radius:4px;border:1px solid #3d5a30;font-size:20px;letter-spacing:.5px;">¡Sí, quiero mi Arsenal Nutricional ahora!</button>
+            <button id="kiwify-upsell-trigger-t77HglB" class="btn-pulse" style="background:linear-gradient(135deg,#4a6a3a 0%,#3d5a30 100%);padding:14px 24px;cursor:pointer;color:#FFFFFF;font-weight:700;border-radius:4px;border:1px solid #3d5a30;font-size:20px;letter-spacing:.5px;">¡Sí, quiero mi Arsenal Nutricional ahora!</button>
             <div id="kiwify-upsell-cancel-trigger-t77HglB" style="margin-top:1rem;cursor:pointer;font-size:16px;text-decoration:underline;font-family:sans-serif;">No, prefiero rechazar esta oferta y seguir sin apoyo nutricional.</div>
           </div><script src="https://snippets.kiwify.com/upsell/upsell.min.js"></script>
         </div>
@@ -942,6 +942,12 @@
     @keyframes ripple-anim {
       to { transform: scale(2.5); opacity: 0; }
     }
+    @keyframes pulse-btn {
+      0%   { transform: scale(1);    box-shadow: 0 0 0 0 rgba(74,106,58,0.7); }
+      50%  { transform: scale(1.04); box-shadow: 0 0 0 14px rgba(74,106,58,0); }
+      100% { transform: scale(1);    box-shadow: 0 0 0 0 rgba(74,106,58,0); }
+    }
+    .btn-pulse { animation: pulse-btn 1.8s ease-in-out infinite; display: inline-block; }
   </style>
 
 </body>
